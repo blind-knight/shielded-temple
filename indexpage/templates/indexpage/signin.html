@@ -3,15 +3,6 @@
 <html lang="en">
 
 <head>
-
-    <style>
-title {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    background-color: #063
-}
-</style>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta name="google-signin-client_id" content="202837357767-u9th3e4s1v9h8hth7finvagctpulh6s2.apps.googleusercontent.com">
 
@@ -21,7 +12,7 @@ title {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Health Advice</title>
+    <title>Login/Register | Health Advice</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{% static 'thm/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -38,11 +29,20 @@ title {
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> 
 
     <!-- Theme CSS -->
-    <link href="{% static 'thm/css/agency.min.css'  %}" rel="stylesheet">
+    <link href="{% static 'thm/reg/agency.min.css'  %}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'thm/reg/form-elements.css' %}">
+    <link rel="stylesheet" href="{% static 'thm/reg/style.css' %}">
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
+
+        <link rel="stylesheet" href="{% static 'thm/reg/form-elements.css' %}">
+    <link rel="stylesheet" href="{% static 'thm/reg/style.css' %}">
+
+
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
@@ -51,68 +51,103 @@ title {
 
 </head>
 
-<body id="page-top" class="index">
+<body id="page-top" class="index" style="background-color:#a2e7da">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=334611840216747";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
     <!-- Navigation -->
-    <nav id="mainNav"  style="background-color:#333333" class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top"  style="background-color:#000">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="/main">Health Advice</a>
+                <a class="navbar-brand page-scroll" href="/#page-top">Health Advice</a>
             </div>
 
-           
+            <!-- Collect the nav links, forms, and other content for toggling -->
+             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="/#services">Services</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="/#team">Our Team</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="/#contact">Contact</a>
+                    </li>
+                    <li>
+                        <a href="/login">Log In/Register</a>
+                    </li>
+                </ul>
+            </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
     </nav>
 
 
-    <!-- Services Section -->
+
+
+    <!-- Services Section<button type="submit" class="btn">Sign in!</button> -->
     <section id="services">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Register/Log In</h2>
-                    <br></br>
-                </div>
-            </div>
-            <div class="row text-center">
-                <div class="col-md-6">
-                    <span class="fa-stack fa-4x">
-                        <i class="fa fa-user-plus fa-2x" aria-hidden="true"></i>
-                    </span>
-                    <h4 class="service-heading">Register</h4>
-                    <p class="text-muted">Register using one of the following.</p>
-     				<div class="btn-group">
-						<a class='btn btn-primary' href="{% url 'social:begin' 'google-oauth2' %}" style="width:15em;"> Sign up with Google</a>
-					</div>
-                    <br>
-                    <p class="text-muted">Dont have a Google account? Create one <a href="https://accounts.google.com/signup?hl=en" class="text-muted">here</a></p>
-                    
 
-                </div>
-                <div class="col-md-6">
-                    <span class="fa-stack fa-4x">
-                        <i class="fa fa-sign-in fa-2x" aria-hidden="true"></i>
-                    </span>
-                    <h4 class="service-heading">Log In</h4>
-                    {% if user and not user.is_anonymous %}
-                    <h4>Hello {{ user.get_full_name|default:user.username }}</h4>
-                    <a href="{% url 'auth:logout' %}?next={{ request.path }}">Not you? Logout</a>
-                    <br></br>
-                    <a href="/sympcheck" class="btn btn-primary" role="button">Check Symptoms</a>
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text">
+                        <br>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2">
+                            
+                            <div class="form-box">
+                                <div class="form-top">
+                                    <div class="form-top-left">
+                                        <h3>Login/Register</h3>
+                                    </div>
+                                </div>
+                                <div class="form-bottom">
+
+                                <div class="social-login-buttons">
+                                <center><h4>Register Or Login using one of the following</h4></center>
+                                <br>
+                                <center><h5>We use these platforms to login users into our system. </h5></center>
+                                <center><h5>New Users will be redirected to registration page</h5></center>
+                                <center><h5>Existing users will be redirected to the dashboard</h5></center>
+                                {% if user and not user.is_anonymous %}
+                    <a>Hello {{ user.get_full_name|default:user.username }}!</a>
+                    <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
                     {% else %}
                     <p class="text-muted">Already a member? Login into your account.</p>
-     				<div class="btn-group">
-						<a class='btn btn-primary' href="{% url 'social:begin' 'google-oauth2' %}" style="width:15em;"> Log in with Google</a>
-					</div>
+                    <li>
+       <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Login with Facebook</a>
+     </li>
+     <li>
+       <a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Login with Google</a>
+     </li>
+     <li>
+       <a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">Login with Twitter</a>
+     </li>
                     {% endif %}
-                </div>
-            </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
         </div>
     </section>
 
