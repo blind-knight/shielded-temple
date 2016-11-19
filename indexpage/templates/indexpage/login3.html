@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+
+<head>
+
+    <style>
+title {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #063
+}
+</style>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="202837357767-u9th3e4s1v9h8hth7finvagctpulh6s2.apps.googleusercontent.com">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Health Advice</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'thm/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!--favicon-->
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+
+    <!-- Custom Fonts -->
+    <link href="{% static 'thm/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> 
+
+    <!-- Theme CSS -->
+    <link href="{% static 'thm/css/agency.min.css'  %}" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+
+</head>
+
+<body id="page-top" class="index">
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=334611840216747";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+    <!-- Navigation -->
+    <nav id="mainNav"  style="background-color:#333333" class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="/">Health Advice</a>
+            </div>
+
+           
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Register/Log In</h2>
+                    <br></br>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-6">
+                    <span class="fa-stack fa-4x">
+                        <img class="img-circle img-responsive" src="{% static 'thm/img/logos/anony.png' %}" alt="">
+                    </span>
+                    <h4 class="service-heading">Register</h4>
+                    <p class="text-muted">Register using one of the following.</p>
+                    <center><div class="g-signin2" data-onsuccess="onSignIn"></div></center>
+                    <br>
+                    <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false"></div>
+                    
+
+                </div>
+                <div class="col-md-6">
+                    <span class="fa-stack fa-4x">
+                        <img class="img-circle img-responsive" src="{% static 'thm/img/logos/register.png' %}" alt="">
+                    </span>
+                    <h4 class="service-heading">Log In</h4>
+                    {% if user and not user.is_anonymous %}
+                    <h4>Hello {{ user.get_full_name|default:user.username }}</h4>
+                    <a href="{% url 'auth:logout' %}?next={{ request.path }}">Not you? Logout</a>
+                    <br></br>
+                    <a href="/dashboard" class="btn btn-primary" role="button">Dashboard</a>
+                     {% else %}
+                    <p class="text-muted">Already a member? Login into your account.</p>
+                    <li>
+       <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Login with Facebook</a>
+     </li>
+     <li>
+       <a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Login with Google</a>
+     </li>
+     <li>
+       <a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">Login with Twitter</a>
+     </li>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="copyright">Copyright &copy; healthadvice.co.in</span>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline social-buttons">
+                        <li><a href="#"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline quicklinks">
+                        <li><a href="#">Privacy Policy</a>
+                        </li>
+                        <li><a href="#">Terms of Use</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <!-- jQuery -->
+    <script src="{% static 'thm/vendor/jquery/jquery.min.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'thm/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="{% static 'thm/js/jqBootstrapValidation.js' %}"></script>
+    <script src="{% static 'thm/js/contact_me.js' %}"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="{% static 'thm/js/agency.min.js' %}"></script>
+
+</body>
+
+</html>

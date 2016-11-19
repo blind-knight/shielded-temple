@@ -1,0 +1,18 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="{% static 'css/indexpage.css' %}">
+        <title>Health Advice</title>
+    </head>
+    <body>
+        <div>
+            <center><h1><a href="http://medicaladvice.co.in">Health Advice</a></h1></center>
+        </div>
+
+        <div>
+            <center><h2>This website is under construction.</h2></center>
+        </div>
+    </body>
+</html>

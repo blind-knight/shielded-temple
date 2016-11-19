@@ -1,0 +1,268 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <!-- top tiles -->
+          
+          <!-- /top tiles -->
+          <div class="row">
+          <div id="sticky-anchor"></div>
+
+            <div class="col-md-12 col-sm-6 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h4><i class="fa fa-stethoscope "></i> Create New Case</h4>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <div class="col-xs-12">
+                      <!-- Tab panes -->
+                      <div class="tab-content">
+                        <div class="tab-pane active" id="new">
+                          
+
+                <div class="x_panel">
+                  <div class="x_content">
+                    <br />
+                    <form action="/diagnose/" method="post">
+                      {% csrf_token %}
+                      {{form.as_p}}
+                      <input type="submit" value="Register" />
+                    </form>
+                    <form class="form-horizontal form-label-left">
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Patient ID</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                      <p>
+                        M:
+                        <input type="radio" class="flat" name="gender" id="genderM" value="M" checked="" required /> F:
+                        <input type="radio" class="flat" name="gender" id="genderF" value="F" />
+                      </p>
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Age</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <select class="form-control">
+                            <option>0-2 years</option>
+                            <option>3-6 years</option>
+                            <option>7-12 years</option>
+                            <option>13-17 years</option>
+                            <option selected="selected">18-24 years</option>
+                            <option>25-34 years</option>
+                            <option>35-44 years</option>
+                            <option>45-54 years</option>
+                            <option>55-64 years</option>
+                            <option>65 years and above</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Pulse</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Blood Pressure</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Respiration Rate</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Height</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Weight</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">BMI</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Pallor</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                      <p>
+                        Yes:
+                        <input type="radio" class="flat" name="pallor" id="pallorY" value="yes" checked="" required /> No:
+                        <input type="radio" class="flat" name="pallor" id="pallorN" value="no" checked="checked" />
+                      </p>
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Icterus</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                      <p>
+                        Yes:
+                        <input type="radio" class="flat" name="icterus" id="icterusY" value="yes" checked="" required /> No:
+                        <input type="radio" class="flat" name="icterus" id="icterusN" value="no" checked="checked"  />
+                      </p>
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Cyanosis</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                      <p>
+                        Yes:
+                        <input type="radio" class="flat" name="cyanosis" id="cyanosisY" value="yes" checked="" required /> No:
+                        <input type="radio" class="flat" name="cyanosis" id="cyanosisN" value="no" checked="checked"  />
+                      </p>
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Clubbing</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                      <p>
+                        Yes:
+                        <input type="radio" class="flat" name="clubbing" id="clubbingY" value="yes" checked="" required /> No:
+                        <input type="radio" class="flat" name="clubbing" id="clubbingN" value="no" checked="checked"  />
+                      </p>
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Lymphadenopathy</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                      <p>
+                        Yes:
+                        <input type="radio" class="flat" name="lymphadenopathy" id="lymphadenopathyY" value="yes" checked="" required /> No:
+                        <input type="radio" class="flat" name="lymphadenopathy" id="lymphadenopathyN" value="no"  checked="checked" />
+                      </p>
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Thyroid Enlargement</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                      <p>
+                        Diffuse:
+                        <input type="radio" class="flat" name="thyen" id="thyenD" value="diffuse" checked="" required /> Nodular:
+                        <input type="radio" class="flat" name="thyen" id="thyenN" value="nodular" checked="checked"  />
+                      </p>
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Peripheral Pulses</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                      <p>
+                        Yes:
+                        <input type="radio" class="flat" name="peripulses" id="peripulsesY" value="yes" checked="" required /> No:
+                        <input type="radio" class="flat" name="peripulses" id="peripulsesN" value="no" checked="checked"  />
+                      </p>
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">C sign</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                      <p>
+                        Yes:
+                        <input type="radio" class="flat" name="Csign" id="CsignY" value="yes" checked="" required /> No:
+                        <input type="radio" class="flat" name="Csign" id="CsignN" value="no"  checked="checked" />
+                      </p>
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">T sign</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                      <p>
+                        Yes:
+                        <input type="radio" class="flat" name="Tsign" id="TsignY" value="yes" checked="" required /> No:
+                        <input type="radio" class="flat" name="Tsign" id="TsignN" value="no"  checked="checked" />
+                      </p>
+                      </div>
+                      </div><div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Petechiae</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                      <p>
+                        Yes:
+                        <input type="radio" class="flat" name="petechiae" id="petechiaeY" value="yes" checked="" required /> No:
+                        <input type="radio" class="flat" name="petechiae" id="petechiaeN" value="no" checked="checked"  />
+                      </p>
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Purpura</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                      <p>
+                        Yes:
+                        <input type="radio" class="flat" name="purpura" id="purpuraY" value="yes" checked="" required /> No:
+                        <input type="radio" class="flat" name="purpura" id="purpuraN" value="no"  checked="checked" />
+                      </p>
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Acanthosis</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                      <p>
+                        Yes:
+                        <input type="radio" class="flat" name="acanthosis" id="acanthosisY" value="yes" checked="" required /> No:
+                        <input type="radio" class="flat" name="acanthosis" id="acanthosisN" value="no" checked="checked"  />
+                      </p>
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Skin Tags</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                      <p>
+                        Yes:
+                        <input type="radio" class="flat" name="skintags" id="skintagsY" value="yes" checked="" required /> No:
+                        <input type="radio" class="flat" name="skintags" id="skintagsN" value="no"  checked="checked" />
+                      </p>
+                      </div>
+                      </div>
+                      
+                      <div class="ln_solid"></div>
+                      <div class="form-group">
+                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                          <button type="submit" class="btn btn-primary">Cancel</button>
+                          <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                      </div>
+
+                    </form>
+                  </div>
+                </div>
+
+
+
+
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                  </div>
+                </div>
+                </div>
+
+          </div>
+          </div>
+
+    
+
+        <!-- /page content -->
+
+{% endblock %}
