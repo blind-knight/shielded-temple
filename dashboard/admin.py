@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import toDoList, patient, case
+
+
+admin.site.register(toDoList)
+admin.site.register(patient)
+admin.site.register(case)

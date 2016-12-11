@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Diagnose | Health Advice</title>
+    <script src="https://use.fontawesome.com/fa0f069349.js"></script>
+
+        <!--favicon-->
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+
+   <!-- Bootstrap -->
+    <link href="{% static 'dashboard/vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="{% static 'dashboard/vendors/iCheck/skins/flat/green.css' %}" rel="stylesheet">
+        <!-- NProgress -->
+    <link href="{% static 'dashboard/vendors/nprogress/nprogress.css' %}" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="{% static 'dashboard/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css' %}" rel="stylesheet">
+
+    <!-- switchery -->
+    <link href="{% static 'dashboard/vendors/switchery/dist/switchery.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'dashboard/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'dashboard/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'dashboard/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'dashboard/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'dashboard/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="{% static 'dashboard/build/css/custom.min.css' %}" rel="stylesheet">
+
+  <style type="text/css">
+    * {
+  box-sizing: border-box;
+}
+table,
+tr td:last-child {
+  position: relative;
+}
+th,
+td {
+  padding: 0 10px;
+  height: 2em;
+}
+td > div {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.7s;
+  right: 0;
+  top: 0.5em;
+  /* 1/4 height of td*/
+  height: 2em;
+  /*height of td*/
+}
+tr:hover td > div {
+  opacity: 1;
+}
+tbody tr td:first-child:before {
+  width: 100%;
+  content: '';
+  display: block;
+  height: 100%;
+  position: absolute;
+  background: rgba(0, 0, 0, 0);
+  margin-top: -6px;
+  /* off set space above text */
+  left: 0;
+  transition: background 0.5s;
+}
+tbody tr:hover td:first-child:before {
+  background: rgba(0, 0, 0, 0);
+}
+td > div > a {
+  margin: 0 0.25em 0 0;
+  background: #1DE9B6;
+  color: #584f4f;
+  text-decoration: none;
+  border-radius: 12px;
+  padding: 5px;
+  transition: color 0.5s, background 0.5s;
+}
+.scroll {  
+    height: 200px !important;
+    overflow-y: scroll;
+}​
+
+  </style>
+  </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a href="/dashboard" class="site_title"><i class="fa fa-user-md"></i> <span>Health Advice</span></a>
+            </div>
+
+            <div class="clearfix"></div>
+            
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+
+                <ul class="nav side-menu">
+                <li><a><i class="fa fa-user"></i> Patient Information<span class="fa fa-chevron-down"></span></a>
+                <ul class="nav child_menu">
+                  <li><a href=""><strong>Patient ID: {{patientId}}</strong></a></li>
+                  <li><a href=""><strong>Age: 
+                                              {%if case.Age == '65above' %}
+                                                    65 years and above
+                                              {%else%}
+                                                     {{case.Age}} years
+                                              {%endif%}</strong></a></li>
+                  <li><a href=""><strong>Gender: {%if case.Gender%}
+                                                    Male
+                                                  {%else%}
+                                                    Female
+                                                  {%endif%}</strong></a></li>
+                  <li><a href=""><strong>Pulse: {{case.Pulse}}</strong></a></li>
+                  <li><a href=""><strong>Blood Pressure: {{case.BloodP}}</strong></a></li>
+                  <li><a href=""><strong>Respiration Rate: {{case.RespirationR}}</strong></a></li>
+                  <li><a href=""><strong>Height: {{case.Height}} {{case.HeightUnits}}</strong></a></li>
+                  <li><a href=""><strong>Weight: {{case.Weight}} {{case.WeightUnits}}</strong></a></li>
+                  <li><a href=""><strong>BMI: {{case.BMI}}</strong></a></li>
+                  <li><a href=""><strong>Pallor: {{case.Pallor}}</strong></a></li>
+                  <li><a href=""><strong>Icterus: {{case.Icterus}}</strong></a></li>
+                  <li><a href=""><strong>Cyanosis: {{case.Cyanosis}}</strong></a></li>
+                  <li><a href=""><strong>Clubbing: {{case.Clubbing}}</strong></a></li>
+                  <li><a href=""><strong>Lymphadenopathy: {{case.Lymphadenopathy}}</strong></a></li>
+                  <li><a href=""><strong>Thyroid Enlargement: {%if case.ThyroidE%}
+                                                    Diffuse
+                                                  {%else%}
+                                                    Nodular
+                                                  {%endif%}</strong></a></li>
+                  <li><a href=""><strong>Peripheral Pulses: {{case.PeripheralP}}</strong></a></li>
+                  <li><a href=""><strong>C sign: {{case.Csign}}</strong></a></li>
+                  <li><a href=""><strong>T sign: {{case.Tsign}}</strong></a></li>
+                  <li><a href=""><strong>Petechiae: {{case.Petechiae}}</strong></a></li>
+                  <li><a href=""><strong>Purpura: {{case.Purpura}}</strong></a></li>
+                  <li><a href=""><strong>Acanthosis: {{case.Acanthosis}}</strong></a></li>
+                  <li><a href=""><strong>Skin Tags: {{case.SkinTags}}</strong></a></li>
+                    </ul>
+                    </li>
+                  <li><a href="/diagnose"><i class="fa fa-stethoscope "></i> Diagnose</a>
+                  </li>
+                  <li><a><i class="fa fa-check-circle-o"></i> Management<span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                  <li><a href="/aetiology">Aetiology</a></li>
+                  </ul>
+                  </li>
+                  <li><a href="/casereport"><i class="fa fa-file-text-o"></i> Case Report</a></li>
+                </ul>
+              </div>
+              
+
+            </div>
+            <!-- /sidebar menu -->
+
+          </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+            <nav>
+              <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+              </div>
+              <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <img src="{% static 'dashboard/self/pictures/img.jpg' %}" alt="">{{ user.get_full_name|default:user.username }}
+                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li><a href="javascript:;"> Profile</a></li>
+                    <li>
+                      <a href="javascript:;">
+                        <span class="badge bg-red pull-right">50%</span>
+                        <span>Settings</span>
+                      </a>
+                    </li>
+                    <li><a href="javascript:;">Help</a></li>
+                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!-- /top navigation -->
+       <!-- page content -->
+        <div class="right_col" role="main">
+
+
+      <!-- top tiles -->
+          <div id="sticky-anchor"></div>
+
+          <div class="row">
+          <!-- <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                <div class="col-md-2 col-sm-4 col-xs-4">
+              <h5><strong>Diagnosis Status</strong></h5>
+              </div>
+              <div class="col-md-10 col-sm-8 col-xs-8">
+                  <div class="progress">
+                        <div class="progress-bar progress-bar-success" data-transitiongoal="55"></div>
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+ -->
+
+            <div class="col-md-6 col-sm-3 col-xs-12">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                  <h5><strong>Symptoms Selection</strong></h5>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search symptoms...">
+                    <span class="input-group-btn">
+                              <button class="btn btn-default" type="button">Go!</button>
+                          </span>
+                  </div>
+                </div>
+                </div>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                      <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#tab_content1" id="signs" role="tab" data-toggle="tab" aria-expanded="true">Signs and Symptoms</a>
+                        </li>
+                        <li role="presentation" class=""><a href="#tab_content2" role="tab" id="tests" data-toggle="tab" aria-expanded="false">Tests reports</a>
+                        </li>
+                      </ul>
+                      <div id="myTabContent" class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="signs">
+
+                
+
+                          
+
+
+
+                   <div class="x_content">
+
+                    <div class="col-md-3 col-sm-6 col-xs-4">
+                      <!-- required for floating -->
+                      <!-- Nav tabs -->
+                      <ul class="nav nav-tabs tabs-left">
+                        <li class="active"><a href="#head" data-toggle="tab">Head</a>
+                        </li>
+                        <li><a href="#neck" data-toggle="tab">Neck</a>
+                        </li>
+                        <li><a href="#chest" data-toggle="tab">Chest</a>
+                        </li>
+                        <li><a href="#arm" data-toggle="tab">Arm</a>
+                        </li>
+                        <li><a href="#abdomen" data-toggle="tab">Abdomen</a>
+                        </li>
+                        <li><a href="#pelvis" data-toggle="tab">Pelvis</a>
+                        </li>
+                        <li><a href="#legs" data-toggle="tab">Legs</a>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="col-md-9 col-sm-6 col-xs-8">
+                      <!-- Tab panes -->
+                      <div class="tab-content">
+                        <div class="tab-pane active" id="head">
+                  <div class="x_content">
+
+                    <div class="col-md-3 col-sm-6 col-xs-4">
+                      <!-- required for floating -->
+                      <!-- Nav tabs -->
+                      <ul class="nav nav-tabs tabs-left">
+                        <li class="active"><a href="#scalp" data-toggle="tab">Scalp</a>
+                        </li>
+                        <li><a href="#eyes" data-toggle="tab">Eyes</a>
+                        </li>
+                        <li><a href="#ears" data-toggle="tab">Ears</a>
+                        </li>
+                        <li><a href="#face" data-toggle="tab">Face</a>
+                        </li>
+                        <li><a href="#nose" data-toggle="tab">Nose</a>
+                        </li>
+                        <li><a href="#mouth" data-toggle="tab">Mouth</a>
+                        </li>
+                        <li><a href="#jaw" data-toggle="tab">Jaw</a>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="col-md-9 col-sm-6 col-xs-8">
+                      <!-- Tab panes -->
+                    <div class="tab-content">
+                     <div class="tab-pane active" id="scalp">
+                         <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Search symptoms...">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                          </span>
+                         </div>
+                         <div class="scroll">
+                         <div class="x_content">
+
+                      <div class="">
+                        <ul class="to_do">
+                          <li>
+                            <p>
+                              <input type="checkbox" class="flat"> This </p>
+                          </li>
+                          <li>
+                            <p>
+                              <input type="checkbox" class="flat"> is</p>
+                          </li>
+                          <li>
+                            <p>
+                              <input type="checkbox" class="flat"> another</p>
+                          </li>
+                          <li>
+                            <p>
+                              <input type="checkbox" class="flat"> way</p>
+                          </li>
+                          <li>
+                            <p>
+                              <input type="checkbox" class="flat"> of</p>
+                          </li>
+                          <li>
+                            <p>
+                              <input type="checkbox" class="flat"> putting</p>
+                          </li>
+                          <li>
+                            <p>
+                              <input type="checkbox" class="flat"> symptoms</p>
+                          </li>
+                          <li>
+                            <p>
+                              <input type="checkbox" class="flat"> in</p>
+                          </li>
+                          <li>
+                            <p>
+                              <input type="checkbox" class="flat"> a</p>
+                          </li>
+                          <li>
+                            <p>
+                              <input type="checkbox" class="flat"> list</p>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                      </div>
+                     </div>
+                     <div class="tab-pane" id="eyes">
+                         <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Search symptoms...">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                          </span>
+                         </div>
+                         <div class="scroll">
+                         <table id="datatable" class="table table-striped table-bordered">
+                           <thead>
+                            <tr>
+                             <th>Name</th>
+                           </tr>
+                         </thead>
+                         <tbody>
+                          <tr>
+                            <td>1<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>2<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>3<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>4<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>5<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>6<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>7<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>8<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>9<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>10<div><a href="#">Add</a></div></td>
+                          </tr>
+                        </tbody>
+                       </table>
+                      </div>
+                     </div>
+                     <div class="tab-pane" id="ears">
+                         <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Search symptoms...">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                          </span>
+                         </div>
+                         <div class="scroll">
+                         <table id="datatable" class="table table-striped table-bordered">
+                           <thead>
+                            <tr>
+                             <th>Name</th>
+                           </tr>
+                         </thead>
+                         <tbody>
+                          <tr>
+                            <td>1<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>2<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>3<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>4<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>5<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>6<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>7<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>8<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>9<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>10<div><a href="#">Add</a></div></td>
+                          </tr>
+                        </tbody>
+                       </table>
+                      </div>
+                     </div>
+                     <div class="tab-pane" id="face">
+                         <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Search symptoms...">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                          </span>
+                         </div>
+                         <div class="scroll">
+                         <table id="datatable" class="table table-striped table-bordered">
+                           <thead>
+                            <tr>
+                             <th>Name</th>
+                           </tr>
+                         </thead>
+                         <tbody>
+                          <tr>
+                            <td>1<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>2<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>3<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>4<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>5<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>6<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>7<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>8<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>9<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>10<div><a href="#">Add</a></div></td>
+                          </tr>
+                        </tbody>
+                       </table>
+                      </div>
+                     </div>
+                     <div class="tab-pane" id="nose">
+                         <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Search symptoms...">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                          </span>
+                         </div>
+                         <div class="scroll">
+                         <table id="datatable" class="table table-striped table-bordered">
+                           <thead>
+                            <tr>
+                             <th>Name</th>
+                           </tr>
+                         </thead>
+                         <tbody>
+                          <tr>
+                            <td>1<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>2<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>3<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>4<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>5<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>6<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>7<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>8<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>9<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>10<div><a href="#">Add</a></div></td>
+                          </tr>
+                        </tbody>
+                       </table>
+                      </div>
+                     </div>
+                     <div class="tab-pane" id="mouth">
+                         <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Search symptoms...">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                          </span>
+                         </div>
+                         <div class="scroll">
+                         <table id="datatable" class="table table-striped table-bordered">
+                           <thead>
+                            <tr>
+                             <th>Name</th>
+                           </tr>
+                         </thead>
+                         <tbody>
+                          <tr>
+                            <td>1<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>2<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>3<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>4<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>5<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>6<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>7<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>8<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>9<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>10<div><a href="#">Add</a></div></td>
+                          </tr>
+                        </tbody>
+                       </table>
+                      </div>
+                     </div>
+                     <div class="tab-pane" id="jaw">
+                         <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Search symptoms...">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                          </span>
+                         </div>
+                         <div class="scroll">
+                         <table id="datatable" class="table table-striped table-bordered">
+                           <thead>
+                            <tr>
+                             <th>Name</th>
+                           </tr>
+                         </thead>
+                         <tbody>
+                          <tr>
+                            <td>1<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>2<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>3<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>4<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>5<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>6<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>7<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>8<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>9<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>10<div><a href="#">Add</a></div></td>
+                          </tr>
+                        </tbody>
+                       </table>
+                      </div>
+                     </div>
+                     </div>
+                    </div>
+                    </div>
+
+                        </div>
+                  <div class="tab-pane" id="neck">
+                    <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Search symptoms...">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                          </span>
+                         </div>
+                         <div class="scroll">
+                         <table id="datatable" class="table table-striped table-bordered">
+                           <thead>
+                            <tr>
+                             <th>Name</th>
+                           </tr>
+                         </thead>
+                         <tbody>
+                          <tr>
+                            <td>1<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>2<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>3<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>4<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>5<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>6<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>7<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>8<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>9<div><a href="#">Add</a></div></td>
+                          </tr>
+                          <tr>
+                            <td>10<div><a href="#">Add</a></div></td>
+                          </tr>
+                        </tbody>
+                       </table>
+                      </div>
+                  </div>
+
+
+                  <div class="tab-pane" id="chest">
+                   <div class="x_content">
+
+                    <div class="col-md-3 col-sm-6 col-xs-4">
+                      <!-- required for floating -->
+                      <!-- Nav tabs -->
+                      <ul class="nav nav-tabs tabs-left">
+                        <li class="active"><a href="#bothchests" data-toggle="tab">Chests Tab</a>
+                        </li>
+                        <li><a href="#sternum" data-toggle="tab">Sternum</a>
+                        </li>
+                        <li><a href="#latchest" data-toggle="tab">Lateral Chest</a>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="col-md-9 col-sm-6 col-xs-8">
+                      <!-- Tab panes -->
+                      <div class="tab-content">
+                        <div class="tab-pane active" id="bothchests">
+                          <p class="lead">Chests tab</p>
+                          <p></p>
+                        </div>
+                        <div class="tab-pane active" id="sternum">
+                          <p class="lead">Sternum tab</p>
+                          <p></p>
+                        </div>
+                        <div class="tab-pane active" id="latchest">
+                          <p class="lead">Lateral Chest</p>
+                          <p></p>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                </div>
+                   <div class="tab-pane" id="arm">Profile Tab.</div>
+                     <div class="tab-pane" id="abdomen">Profile Tab.</div>
+                       <div class="tab-pane" id="pelvis">Profile Tab.</div>
+                         <div class="tab-pane" id="legs">Profile Tab.</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      </div>
+                    </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="tests">
+                          
+                  <div class="x_content">
+                    <br />
+                    <form class="form-horizontal form-label-left">
+
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Select Test</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <select class="form-control">
+                            <option>Choose option</option>
+                            <option>Option one</option>
+                            <option>Option two</option>
+                            <option>Option three</option>
+                            <option>Option four</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Input Test Value</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <input type="text" class="form-control">
+                          <label class="control-label col-md-3 col-sm-3 col-xs-12">Or</label>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-3 col-sm-3 col-xs-12 control-label">Select Test State
+                        </label>
+
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <div class="radio">
+                            <label>
+                              <input type="radio" class="flat" checked name="iCheck"> Positive
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <label>
+                              <input type="radio" class="flat" name="iCheck"> Negative
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="ln_solid"></div>
+                      <div class="form-group">
+                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                          <button type="submit" class="btn btn-primary">Cancel</button>
+                          <input type="button" class="btn btn-success btnSeccion" id="btnSeccion3" value="Add"/>
+                        </div>
+                      </div>
+
+                    </form>
+                  </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                    <!--div class="x_title">
+                      <h2>Diagnosis Status</h2>
+                        <div class="clearfix"></div>
+                        <div class="x_content">
+                        <div class="count green"><h5><strong>Diagnosis Started at 10:20:25 am</strong></h5></div>
+                        </div>
+                </div-->
+
+                </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                <div class="x_title">
+                  <h5><strong>Comments</strong></h5>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                          <textarea id="message" required="required" class="form-control" name="message" data-parsley-trigger="keyup" data-parsley-validation-threshold="10"></textarea>
+                                                <br/>
+                          <span class="btn btn-primary pull-right">Submit</span>
+                  
+                </div>
+              
+
+                </div>
+                </div>
+
+              </div>
+              <!-- <div class="col-md-3 col-sm-3 col-xs-12">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h5><strong>Selected Symptoms</strong></h5>
+                  <div class="clearfix"></div>
+                </div>
+                                <div class="x_content">
+                
+
+                    <table id="datatable" class="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                        </tr>
+                      </thead>
+
+
+                      <tbody>
+                        <tr>
+                          <td>abcdefghijklmnopqrstuvwxyz123456789
+                          <div><a href="#">X</a></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Symptom
+                          <div><a href="#">X</a></div>
+                          </td>
+                        </tr>
+                          <tr>
+                          <td>Symptom
+                          <div><a href="#">X</a></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Symptom
+                          <div><a href="#">X</a></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Symptom
+                          <div><a href="#">X</a></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Symptom
+                          <div><a href="#">X</a></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Symptom
+                          <div><a href="#">X</a></div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                </div>
+                </div>
+
+              </div> -->
+              <div class="col-md-3 col-sm-3 col-xs-12">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h5><strong>Selected Symptoms</strong></h5>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                <ul class="list-inline widget_tally">
+                                <li>
+                                  <p>
+                                    <span class="month">abcdefghijklmnopqrstuvwxyz12345 </span>
+                                    <span class="count"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                  </p>
+                                </li>
+                                <li>
+                                  <p>
+                                    <span class="month">Symptom 2 </span>
+                                    <span class="count"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                  </p>
+                                </li>
+                                <li>
+                                  <p>
+                                    <span class="month">Symptom 3 </span>
+                                    <span class="count"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                  </p>
+                                </li>
+                                <li>
+                                  <p>
+                                    <span class="month">Symptom 4 </span>
+                                    <span class="count"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                  </p>
+                                </li>
+                                <li>
+                                  <p>
+                                    <span class="month">Symptom 5 </span>
+                                    <span class="count"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                  </p>
+                                </li>
+                              </ul>
+
+                </div>
+                </div>
+
+              </div>
+
+              <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h5><strong>Suggested Questions</strong></h5>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                <!-- jambo_table bulk_action-->
+
+
+
+
+                
+
+                    <table id="datatable" class="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                        </tr>
+                      </thead>
+
+
+                      <tbody>
+                        <tr>
+                          <td>Does the patient shows this symptom?
+                          <div><a href="#">Yes</a><a href="#">No</a><a href="#">Ignore</a></div>
+                          </td>
+
+                        </tr>
+                        <tr>
+                          <td>Is the body temperature of patient above this degrees?
+                          <div><a href="#">Yes</a><a href="#">No</a><a href="#">Ignore</a></div></td>
+                        </tr>
+                        <tr>
+                          <td>Is the body temperature of patient above this degrees?<div><a href="#">Yes</a><a href="#">No</a><a href="#">Ignore</a></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Is the body temperature of patient above this degrees?<div><a href="#">Yes</a><a href="#">No</a><a href="#">Ignore</a></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Is the body temperature of patient above this degrees?<div><a href="#">Yes</a><a href="#">No</a><a href="#">Ignore</a></div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <span class="btn btn-success pull-right btn-sm" style="border-radius:20px">Ignore all</span>
+
+                 </div>
+              </div>
+              </div>
+              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h5><strong>Suggested Tests</strong></h5>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                <!-- jambo_table bulk_action-->                
+
+                    <table id="datatable" class="table table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                        </tr>
+                      </thead>
+
+
+                      <tbody>
+                        <tr>
+                          <td>Kidney Stone Test
+                          <div><a href="#">Positive</a><a href="#">Negative</a><a href="#">Ignore</a></div>
+                          </td>
+
+                        </tr>
+                        <tr>
+                          <td>Diabetis Test
+                          <div><a href="#">Positive</a><a href="#">Negative</a><a href="#">Ignore</a></div></td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                </div>
+                </div>
+              </div>
+              </div>
+          </div>
+
+          <br />
+    
+                <!-- end of weather widget -->
+              </div>
+            </div>
+          </div>
+        <!-- /page content -->
+
+
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            Health Advice 2016
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+        </div>
+        </div>
+
+
+    <!-- jQuery -->
+    <script src="{% static 'dashboard/vendors/jquery/dist/jquery.min.js' %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'dashboard/vendors/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- FastClick -->
+    <script src="{% static 'dashboard/vendors/fastclick/lib/fastclick.js' %}"></script>
+    <!-- iCheck -->
+    <script src="{% static 'dashboard/vendors/iCheck/icheck.min.js' %}"></script>
+    <!-- Switchery -->
+    <script src="{% static 'dashboard/vendors/switchery/dist/switchery.min.js' %}"></script>
+
+
+    <!-- Datatables -->
+    <script src="{% static 'dashboard/vendors/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/datatables.net-buttons/js/buttons.flash.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js' %}"></script>
+    <script src="{% static 'dashboard/vendors/datatables.net-scroller/js/datatables.scroller.min.js' %}"></script>
+
+    <!-- NProgress -->
+    <script src="{% static 'dashboard/vendors/nprogress/nprogress.js' %}"></script>
+        <!-- bootstrap-progressbar -->
+    <script src="{% static 'dashboard/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js' %}"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="{% static 'dashboard/build/js/custom.min.js' %}"></script>
+
+
+
+        <!-- Datatables -->
+    <script>
+
+      $(document).ready(function() {
+        var handleDataTableButtons = function() {
+          if ($("#datatable-buttons").length) {
+            $("#datatable-buttons").DataTable({
+              dom: "Bfrtip",
+              buttons: [
+                {
+                  extend: "copy",
+                  className: "btn-sm"
+                },
+                {
+                  extend: "csv",
+                  className: "btn-sm"
+                },
+                {
+                  extend: "excel",
+                  className: "btn-sm"
+                },
+                {
+                  extend: "pdfHtml5",
+                  className: "btn-sm"
+                },
+                {
+                  extend: "print",
+                  className: "btn-sm"
+                },
+              ],
+              responsive: true
+            });
+          }
+        };
+
+        TableManageButtons = function() {
+          "use strict";
+          return {
+            init: function() {
+              handleDataTableButtons();
+            }
+          };
+        }();
+
+        $('#datatable').dataTable({
+        "language": {
+            "lengthMenu": "Display _MENU_ question per page",
+            "zeroRecords": "",
+            "info": "",
+            "infoEmpty": "",
+            "infoFiltered": ""
+        },
+        bFilter: false,
+        bInfo: false,
+        bSort: false,
+
+        "sPaginationType" : "full_numbers",
+        sDom: 'rt',
+        fnDrawCallback: function() {
+    $("#datatable thead").remove();
+  }
+
+        });
+
+        jQuery(document).ready(function() {
+    // Delete row in a table
+    jQuery('.delete-row').click(function(){
+      var c = confirm("Continue delete?");
+      if(c)
+        jQuery(this).closest('tr').fadeOut(function(){
+          jQuery(this).remove();
+        });
+        return false;
+    });
+
+    // Show aciton upon row hover
+    jQuery('.datatable tbody tr').hover(function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 1});
+    },function(){
+      jQuery(this).find('.table-action-hide a').animate({opacity: 0});
+    });
+});
+
+    
+
+        $('#datatable-keytable').DataTable({
+          keys: true
+        });
+
+        $('#datatable-responsive').DataTable();
+
+        $('#datatable-scroller').DataTable({
+          ajax: "js/datatables/json/scroller-demo.json",
+          deferRender: true,
+          scrollY: 380,
+          scrollCollapse: true,
+          scroller: true
+        });
+
+        $('#datatable-fixed-header').DataTable({
+          fixedHeader: true
+        });
+
+        var $datatable = $('#datatable-checkbox');
+
+        $datatable.dataTable({
+          'order': [[ 1, 'asc' ]],
+          'columnDefs': [
+            { orderable: false, targets: [0] }
+          ]
+        });
+        $datatable.on('draw.dt', function() {
+          $('input').iCheck({
+            checkboxClass: 'icheckbox_flat-green'
+          });
+        });
+
+        TableManageButtons.init();
+      });
+      $(document).ready(function () {
+                $(document).on('mouseenter', '.divbutton', function () {
+                    $(this).find(":button").show();
+                }).on('mouseleave', '.divbutton', function () {
+                    $(this).find(":button").hide();
+                });
+            });
+    </script>
+    <!-- /Datatables -->
+
+   
+  </body>
+</html>

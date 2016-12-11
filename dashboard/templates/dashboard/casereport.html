@@ -61,25 +61,36 @@
                 <ul class="nav side-menu">
                 <li><a><i class="fa fa-user"></i> Patient Information<span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
-                  <li><a href="/managecases"><strong>Pulse: 40</strong></a></li>
-                  <li><a href="/managecases"><strong>Blood Pressure: 40</strong></a></li>
-                  <li><a href="/managecases"><strong>Respiration Rate: 40</strong></a></li>
-                  <li><a href="/managecases"><strong>Height: 40</strong></a></li>
-                  <li><a href="/managecases"><strong>Weight: 40</strong></a></li>
-                  <li><a href="/managecases"><strong>BMI: 40</strong></a></li>
-                  <li><a href="/managecases"><strong>Pallor: No</strong></a></li>
-                  <li><a href="/managecases"><strong>Icterus: No</strong></a></li>
-                  <li><a href="/managecases"><strong>Cyanosis: No</strong></a></li>
-                  <li><a href="/managecases"><strong>Clubbing: No</strong></a></li>
-                  <li><a href="/managecases"><strong>Lymphadenopathy: No</strong></a></li>
-                  <li><a href="/managecases"><strong>Thyroid Enlargemen: Diffuse</strong></a></li>
-                  <li><a href="/managecases"><strong>Peripheral Pulses: No</strong></a></li>
-                  <li><a href="/managecases"><strong>C sign: No</strong></a></li>
-                  <li><a href="/managecases"><strong>T sign: No</strong></a></li>
-                  <li><a href="/managecases"><strong>Petechiae: No</strong></a></li>
-                  <li><a href="/managecases"><strong>Purpura: No</strong></a></li>
-                  <li><a href="/managecases"><strong>Acanthosis: No</strong></a></li>
-                  <li><a href="/managecases"><strong>Skin Tags: No</strong></a></li>
+                  <li><a href=""><strong>Patient ID: {{patientId}}</strong></a></li>
+                  <li><a href=""><strong>Age: {{case.Age}} years</strong></a></li>
+                  <li><a href=""><strong>Gender: {%if case.Gender%}
+                                                    Male
+                                                  {%else%}
+                                                    Female
+                                                  {%endif%}</strong></a></li>
+                  <li><a href=""><strong>Pulse: {{case.Pulse}}</strong></a></li>
+                  <li><a href=""><strong>Blood Pressure: {{case.BloodP}}</strong></a></li>
+                  <li><a href=""><strong>Respiration Rate: {{case.RespirationR}}</strong></a></li>
+                  <li><a href=""><strong>Height: {{case.Height}}</strong></a></li>
+                  <li><a href=""><strong>Weight: {{case.Weight}}</strong></a></li>
+                  <li><a href=""><strong>BMI: {{case.BMI}}</strong></a></li>
+                  <li><a href=""><strong>Pallor: {{case.Pallor}}</strong></a></li>
+                  <li><a href=""><strong>Icterus: {{case.Icterus}}</strong></a></li>
+                  <li><a href=""><strong>Cyanosis: {{case.Cyanosis}}</strong></a></li>
+                  <li><a href=""><strong>Clubbing: {{case.Clubbing}}</strong></a></li>
+                  <li><a href=""><strong>Lymphadenopathy: {{case.Lymphadenopathy}}</strong></a></li>
+                  <li><a href=""><strong>Thyroid Enlargement: {%if case.ThyroidE%}
+                                                    Diffuse
+                                                  {%else%}
+                                                    Nodular
+                                                  {%endif%}</strong></a></li>
+                  <li><a href=""><strong>Peripheral Pulses: {{case.PeripheralP}}</strong></a></li>
+                  <li><a href=""><strong>C sign: {{case.Csign}}</strong></a></li>
+                  <li><a href=""><strong>T sign: {{case.Tsign}}</strong></a></li>
+                  <li><a href=""><strong>Petechiae: {{case.Petechiae}}</strong></a></li>
+                  <li><a href=""><strong>Purpura: {{case.Purpura}}</strong></a></li>
+                  <li><a href=""><strong>Acanthosis: {{case.Acanthosis}}</strong></a></li>
+                  <li><a href=""><strong>Skin Tags: {{case.SkinTags}}</strong></a></li>
                     </ul>
                     </li>
                   <li><a href="/diagnose"><i class="fa fa-stethoscope "></i> Diagnose</a>
@@ -111,7 +122,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="{% static 'dashboard/self/pictures/img.jpg' %}" alt="">Shubhang Borkar
+                    <img src="{% static 'dashboard/self/pictures/img.jpg' %}" alt="">{{ user.get_full_name|default:user.username }}
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -156,7 +167,7 @@
                         <div class="col-xs-12 invoice-header">
                           <h1>
                                           <i class="fa fa-file-text-o"></i> Case Report
-                                          <small class="pull-right">Date: 24/09/2016</small>
+                                          <small class="pull-right">Date: {% now "jS F Y" %}</small>
                                       </h1>
                         </div>
                         <!-- /.col -->
@@ -166,7 +177,7 @@
                         <div class="col-sm-4 invoice-col">
                           <h5><strong>Doctor Details:</strong></h5>
                           <address>
-                                          <strong>Shubhang Borkar</strong>
+                                          <strong>{{ user.get_full_name|default:user.username }}</strong>
                                           <br>Doctor Address Goes here
                                           <br>Phone: goes here
                                           <br>Email: goes here
@@ -176,7 +187,7 @@
                         <div class="col-sm-4 invoice-col">
                         <h5><strong>Patient Details:</strong></h5>
                           <address>
-                                          <strong>Patient ID</strong>
+                                          <strong>Patient ID: {{patientId}}</strong>
                                           <br>patient location
                                       </address>
                         </div>
@@ -203,31 +214,35 @@
                               <tbody>
                                 <tr>
                                   <th style="width:50%"">Gender</th>
-                                  <td>M</td>
+                                  <td>{%if case.Gender%}
+                                                    Male
+                                                  {%else%}
+                                                    Female
+                                                  {%endif%}</td>
                                 </tr>
                                 <tr>
                                   <th>Age</th>
-                                  <td>40</td>
+                                  <td>{{case.Age}} years</td>
                                 </tr>
                                 <tr>
                                   <th>Pulse</th>
-                                  <td>40</td>
+                                  <td>{{case.Pulse}}</td>
                                 </tr>
                                 <tr>
                                   <th>Blood Pressure</th>
-                                  <td>40</td>
+                                  <td>{{case.BloodP}}</td>
                                 </tr>
                                 <tr>
                                   <th>Respiration Rate</th>
-                                  <td>40</td>
+                                  <td>{{case.RespirationR}}</td>
                                 </tr>
                                 <tr>
                                   <th>Height</th>
-                                  <td>40</td>
+                                  <td>{{case.Height}}</td>
                                 </tr>
                                 <tr>
                                   <th>Weight</th>
-                                  <td>40</td>
+                                  <td>{{case.Weight}}</td>
                                 </tr>
                               </tbody>
                             </table>
@@ -239,31 +254,35 @@
                               <tbody>
                               	<tr>
                                   <th style="width:50%">BMI</th>
-                                  <td>40</td>
+                                  <td>{{case.BMI}}</td>
                                 </tr>
                                 <tr>
                                   <th>Pallor</th>
-                                  <td>Yes</td>
+                                  <td>{{case.Pallor}}</td>
                                 </tr>
                                 <tr>
                                   <th>Icterus</th>
-                                  <td>Yes</td>
+                                  <td>{{case.Icterus}}</td>
                                 </tr>
                                 <tr>
                                   <th>Cyanosis</th>
-                                  <td>Yes</td>
+                                  <td>{{case.Cyanosis}}</td>
                                 </tr>
                                 <tr>
                                   <th>Clubbing</th>
-                                  <td>Yes</td>
+                                  <td>{{case.Clubbing}}</td>
                                 </tr>
                                 <tr>
                                   <th>Lymphadenopathy</th>
-                                  <td>Yes</td>
+                                  <td>{{case.Lymphadenopathy}}</td>
                                 </tr>
                                 <tr>
                                   <th>Thyroid Enlargement</th>
-                                  <td>Diffuse</td>
+                                  <td>{%if case.ThyroidE%}
+                                                    Diffuse
+                                                  {%else%}
+                                                    Nodular
+                                                  {%endif%}</td>
                                 </tr>
                               </tbody>
                             </table>
@@ -275,31 +294,31 @@
                               <tbody>
                               	<tr>
                                   <th style="width:50%">Peripheral Pulses</th>
-                                  <td>Yes</td>
+                                  <td>{{case.PeripheralP}}</td>
                                 </tr>
                               	<tr>
                                   <th>C sign</th>
-                                  <td>Yes</td>
+                                  <td>{{case.Csign}}</td>
                                 </tr>
                                 <tr>
                                   <th>T sign</th>
-                                  <td>Yes</td>
+                                  <td>{{case.Tsign}}</td>
                                 </tr>
                                 <tr>
                                   <th>Petechiae</th>
-                                  <td>Yes</td>
+                                  <td>{{case.Petechiae}}</td>
                                 </tr>
                                 <tr>
                                   <th>Purpura</th>
-                                  <td>Yes</td>
+                                  <td>{{case.Purpura}}</td>
                                 </tr>
                                 <tr>
                                   <th>Acanthosis</th>
-                                  <td>Yes</td>
+                                  <td>{{case.Acanthosis}}</td>
                                 </tr>
                                 <tr>
                                   <th>Skin Tags</th>
-                                  <td>Yes</td>
+                                  <td>{{case.SkinTags}}</td>
                                 </tr>
                               </tbody>
                             </table>

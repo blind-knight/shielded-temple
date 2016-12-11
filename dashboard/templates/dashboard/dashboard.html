@@ -1,6 +1,7 @@
 {% extends 'dashboard/base.html' %}
 
 {% block content %}
+
         <!-- page content -->
         <div class="right_col" role="main">
           <!-- top tiles -->
@@ -11,32 +12,26 @@
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> Total Cases</span>
               <div class="count">25</div>
-              <span class="count_bottom"><i class="green">4% </i> From last Week</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-clock-o"></i> Solved Cases</span>
               <div class="count green">18</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> Pending Cases</span>
               <div class="count red">7</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> Total Males</span>
               <div class="count">13</div>
-              <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> Total Females</span>
               <div class="count">8</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-user"></i> Total Children</span>
               <div class="count">4</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
             </div>
           </div>
 
@@ -53,24 +48,33 @@
                         <ul class="list-unstyled">
                           <li class="media event">
                             <div class="media-body">
-                              <a class="title">Create new case</a>
+                              <a class="title">Create New Patient Case</a>
                               <p>Create new case for new patients
                               </p>
-                              <a href="/managecases"><span class="btn btn-primary pull-right">Create Case</span></a>
+                              <a href="/createcase"><span class="btn btn-primary pull-right">Create Case</span></a>
                             </div>
                           </li>
                           <li class="media event">
                             <div class="media-body">
-                              <a class="title">Open Existing Case</a>
+                              <a class="title">Open Existing Patient's Case</a>
                               <p>Open existing case based on the patient ID
                                 <form class="form-horizontal form-label-left">
+                                {% if error_message %}
+                                    <p><strong><i class="red">{{ error_message }}</i></strong></p>
+                                {%endif%}
                                   <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">Patient ID</label>
-                                    <div class="col-md-5 col-sm-5 col-xs-12">
-                                      <input type="text" class="form-control">
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-12">
-                                      <button type="submit" class="btn btn-primary pull-right">Open Case</button>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                      <form method="POST">
+                                      </form>
+                                    <form method="POST" class="opencase-form">{% csrf_token %}
+                                    <div class="col-md-7 col-sm-7 col-xs-12">
+                          {{ form2.as_p }}
+                          </div>
+                          <div class="col-md-5 col-sm-5 col-xs-12">
+                          <button class="btn btn-primary pull-right" type="submit" name="opencase">Open Case</button> 
+                          </div>
+                          </form>
                                     </div>
                                   </div>
 
@@ -130,18 +134,28 @@
 
                       <div class="">
                         <ul class="to_do">
+                        {% for post in posts %}
                           <li>
                             <p>
-                              <input type="checkbox" class="flat"> Schedule meeting with some doctor </p>
+                              <input type="checkbox" class="flat"> {{ post.toDoPost }} </p>
                           </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> Call xyz</p>
-                          </li>
+                        {% endfor %}
                           <br>
-                          <textarea id="message" required="required" class="form-control" name="message" data-parsley-trigger="keyup" data-parsley-validation-threshold="10"></textarea>
+                          <form method="POST" class="todo-form">
+                          {% csrf_token %}
+                          {{ form1.as_p }}
+                          <button class="btn btn-primary pull-right" type="submit" name="todolist">Add</button> 
+                          </form>
+
+<!-- 
+                          <form id="todo_form" method="POST">
+                          {% csrf_token %}
+                          <textarea id="toDoMessage" required="required" class="form-control" name="toDoMessage" data-parsley-trigger="keyup" data-parsley-validation-threshold="10"></textarea>
                           <br>
-                          <span class="btn btn-primary pull-right">Add</span>
+                          
+                          </form>
+ -->
+
                         </ul>
                       </div>
                     </div>
@@ -155,5 +169,6 @@
     
 
         <!-- /page content -->
+
 
 {% endblock %}

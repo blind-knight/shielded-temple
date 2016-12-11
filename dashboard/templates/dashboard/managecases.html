@@ -26,33 +26,33 @@
                 <div class="x_panel">
                   <div class="x_content">
                     <br />
-                    <form action="/diagnose/" method="post">
-                      {% csrf_token %}
+                    <!-- <form action="/diagnose/" method="post">
+                      
                       {{form.as_p}}
                       <input type="submit" value="Register" />
-                    </form>
-                    <form class="form-horizontal form-label-left">
+                    </form> -->
+                    <form class="form-horizontal form-label-left" method="POST">
+                    {% csrf_token %}
 
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Patient ID</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control">
+                          <input type="text" class="form-control" value="{{patientId}}" readonly>
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                       <p>
-                        M:
-                        <input type="radio" class="flat" name="gender" id="genderM" value="M" checked="" required /> F:
-                        <input type="radio" class="flat" name="gender" id="genderF" value="F" />
+                        {{form.Gender}}
                       </p>
                       </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Age</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <select class="form-control">
+                        {{form.Age}}
+                          <!-- <select class="form-control">
                             <option>0-2 years</option>
                             <option>3-6 years</option>
                             <option>7-12 years</option>
@@ -63,53 +63,57 @@
                             <option>45-54 years</option>
                             <option>55-64 years</option>
                             <option>65 years and above</option>
-                          </select>
+                          </select> -->
                         </div>
                       </div>
 
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Pulse</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control">
+                          {{form.Pulse}}
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Blood Pressure</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control">
+                          {{form.BloodP}}
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Respiration Rate</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control">
+                          {{form.RespirationR}}
                         </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Height</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control">
+                          {{form.Height}}{{form.HeightUnits}}
                         </div>
+                        <!-- <div class="col-md-7 col-sm-7 col-xs-7">
+                        {{form.HeightUnits}}
+                        </div> -->
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Weight</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control">
+                          {{form.Weight}}{{form.WeightUnits}}
                         </div>
+                        <!-- <div class="col-md-7 col-sm-7 col-xs-7">
+                        {{form.WeightUnits}}
+                        </div> -->
                       </div>
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">BMI</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          <input type="text" class="form-control">
+                          {{form.BMI}}
                         </div>
-                      </div>
+                      </div> -->
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Pallor</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                       <p>
-                        Yes:
-                        <input type="radio" class="flat" name="pallor" id="pallorY" value="yes" checked="" required /> No:
-                        <input type="radio" class="flat" name="pallor" id="pallorN" value="no" checked="checked" />
+                        {{form.Pallor}}
                       </p>
                       </div>
                       </div>
@@ -117,9 +121,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Icterus</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                       <p>
-                        Yes:
-                        <input type="radio" class="flat" name="icterus" id="icterusY" value="yes" checked="" required /> No:
-                        <input type="radio" class="flat" name="icterus" id="icterusN" value="no" checked="checked"  />
+                        {{form.Icterus}}
                       </p>
                       </div>
                       </div>
@@ -127,9 +129,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Cyanosis</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                       <p>
-                        Yes:
-                        <input type="radio" class="flat" name="cyanosis" id="cyanosisY" value="yes" checked="" required /> No:
-                        <input type="radio" class="flat" name="cyanosis" id="cyanosisN" value="no" checked="checked"  />
+                        {{form.Cyanosis}}
                       </p>
                       </div>
                       </div>
@@ -137,9 +137,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Clubbing</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                       <p>
-                        Yes:
-                        <input type="radio" class="flat" name="clubbing" id="clubbingY" value="yes" checked="" required /> No:
-                        <input type="radio" class="flat" name="clubbing" id="clubbingN" value="no" checked="checked"  />
+                        {{form.Clubbing}}
                       </p>
                       </div>
                       </div>
@@ -147,9 +145,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Lymphadenopathy</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                       <p>
-                        Yes:
-                        <input type="radio" class="flat" name="lymphadenopathy" id="lymphadenopathyY" value="yes" checked="" required /> No:
-                        <input type="radio" class="flat" name="lymphadenopathy" id="lymphadenopathyN" value="no"  checked="checked" />
+                        {{form.Lymphadenopathy}}
                       </p>
                       </div>
                       </div>
@@ -157,9 +153,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Thyroid Enlargement</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                       <p>
-                        Diffuse:
-                        <input type="radio" class="flat" name="thyen" id="thyenD" value="diffuse" checked="" required /> Nodular:
-                        <input type="radio" class="flat" name="thyen" id="thyenN" value="nodular" checked="checked"  />
+                        {{form.ThyroidE}}
                       </p>
                       </div>
                       </div>
@@ -167,9 +161,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Peripheral Pulses</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                       <p>
-                        Yes:
-                        <input type="radio" class="flat" name="peripulses" id="peripulsesY" value="yes" checked="" required /> No:
-                        <input type="radio" class="flat" name="peripulses" id="peripulsesN" value="no" checked="checked"  />
+                        {{form.PeripheralP}}
                       </p>
                       </div>
                       </div>
@@ -177,9 +169,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">C sign</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                       <p>
-                        Yes:
-                        <input type="radio" class="flat" name="Csign" id="CsignY" value="yes" checked="" required /> No:
-                        <input type="radio" class="flat" name="Csign" id="CsignN" value="no"  checked="checked" />
+                        {{form.Csign}}
                       </p>
                       </div>
                       </div>
@@ -187,18 +177,14 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">T sign</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                       <p>
-                        Yes:
-                        <input type="radio" class="flat" name="Tsign" id="TsignY" value="yes" checked="" required /> No:
-                        <input type="radio" class="flat" name="Tsign" id="TsignN" value="no"  checked="checked" />
+                        {{form.Tsign}}
                       </p>
                       </div>
                       </div><div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Petechiae</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                       <p>
-                        Yes:
-                        <input type="radio" class="flat" name="petechiae" id="petechiaeY" value="yes" checked="" required /> No:
-                        <input type="radio" class="flat" name="petechiae" id="petechiaeN" value="no" checked="checked"  />
+                        {{form.Petechiae}}
                       </p>
                       </div>
                       </div>
@@ -206,9 +192,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Purpura</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                       <p>
-                        Yes:
-                        <input type="radio" class="flat" name="purpura" id="purpuraY" value="yes" checked="" required /> No:
-                        <input type="radio" class="flat" name="purpura" id="purpuraN" value="no"  checked="checked" />
+                        {{form.Purpura}}
                       </p>
                       </div>
                       </div>
@@ -216,9 +200,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Acanthosis</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                       <p>
-                        Yes:
-                        <input type="radio" class="flat" name="acanthosis" id="acanthosisY" value="yes" checked="" required /> No:
-                        <input type="radio" class="flat" name="acanthosis" id="acanthosisN" value="no" checked="checked"  />
+                        {{form.Acanthosis}}
                       </p>
                       </div>
                       </div>
@@ -226,9 +208,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Skin Tags</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
                       <p>
-                        Yes:
-                        <input type="radio" class="flat" name="skintags" id="skintagsY" value="yes" checked="" required /> No:
-                        <input type="radio" class="flat" name="skintags" id="skintagsN" value="no"  checked="checked" />
+                        {{form.SkinTags}}
                       </p>
                       </div>
                       </div>
@@ -237,7 +217,7 @@
                       <div class="form-group">
                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
                           <button type="submit" class="btn btn-primary">Cancel</button>
-                          <button type="submit" class="btn btn-success">Submit</button>
+                          <button type="submit" class="btn btn-success">Diagnose</button>
                         </div>
                       </div>
 

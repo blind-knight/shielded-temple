@@ -88,9 +88,51 @@ td > div > a {
     height: 200px !important;
     overflow-y: scroll;
 }​
+.disabled{
+    pointer-events:none;
+    opacity:0.4;
+}
 
+.list-group-item {
+    padding: 7px 7px;
+}
+
+.list-group-item:hover {
+    padding: 7px 7px;
+    background-color: #eee;
+}
+.list-group-item-remove:hover {
+    background-color: #eee;
+}
+
+.list-group-item-remove {
+    position: relative;
+    display: block;
+    padding: 7px 7px;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.list-group-item.disabled, .list-group-item.disabled:focus, .list-group-item.disabled:hover {
+    cursor: not-allowed;
+    background-color: #1ABB9C;
+    opacity:0.8;
+    /*color: #fff */
+}
+.list-group-item.disabled > a {
+    /*cursor: not-allowed;
+    background-color: #1ABB9C;*/
+    color: #fff;
+    font-size: 14px;
+
+}
+.list-group-item-remove:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
   </style>
   </head>
+
 
   <body class="nav-md">
     <div class="container body">
@@ -111,25 +153,41 @@ td > div > a {
                 <ul class="nav side-menu">
                 <li><a><i class="fa fa-user"></i> Patient Information<span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
-                  <li><a href="/managecases"><strong>Pulse: 40</strong></a></li>
-                  <li><a href="/managecases"><strong>Blood Pressure: 40</strong></a></li>
-                  <li><a href="/managecases"><strong>Respiration Rate: 40</strong></a></li>
-                  <li><a href="/managecases"><strong>Height: 40</strong></a></li>
-                  <li><a href="/managecases"><strong>Weight: 40</strong></a></li>
-                  <li><a href="/managecases"><strong>BMI: 40</strong></a></li>
-                  <li><a href="/managecases"><strong>Pallor: No</strong></a></li>
-                  <li><a href="/managecases"><strong>Icterus: No</strong></a></li>
-                  <li><a href="/managecases"><strong>Cyanosis: No</strong></a></li>
-                  <li><a href="/managecases"><strong>Clubbing: No</strong></a></li>
-                  <li><a href="/managecases"><strong>Lymphadenopathy: No</strong></a></li>
-                  <li><a href="/managecases"><strong>Thyroid Enlargemen: Diffuse</strong></a></li>
-                  <li><a href="/managecases"><strong>Peripheral Pulses: No</strong></a></li>
-                  <li><a href="/managecases"><strong>C sign: No</strong></a></li>
-                  <li><a href="/managecases"><strong>T sign: No</strong></a></li>
-                  <li><a href="/managecases"><strong>Petechiae: No</strong></a></li>
-                  <li><a href="/managecases"><strong>Purpura: No</strong></a></li>
-                  <li><a href="/managecases"><strong>Acanthosis: No</strong></a></li>
-                  <li><a href="/managecases"><strong>Skin Tags: No</strong></a></li>
+                  <li><a href=""><strong>Patient ID: {{patientId}}</strong></a></li>
+                  <li><a href=""><strong>Age: 
+                                              {%if case.Age == '65above' %}
+                                                    65 years and above
+                                              {%else%}
+                                                     {{case.Age}} years
+                                              {%endif%}</strong></a></li>
+                  <li><a href=""><strong>Gender: {%if case.Gender%}
+                                                    Male
+                                                  {%else%}
+                                                    Female
+                                                  {%endif%}</strong></a></li>
+                  <li><a href=""><strong>Pulse: {{case.Pulse}}</strong></a></li>
+                  <li><a href=""><strong>Blood Pressure: {{case.BloodP}}</strong></a></li>
+                  <li><a href=""><strong>Respiration Rate: {{case.RespirationR}}</strong></a></li>
+                  <li><a href=""><strong>Height: {{case.Height}} {{case.HeightUnits}}</strong></a></li>
+                  <li><a href=""><strong>Weight: {{case.Weight}} {{case.WeightUnits}}</strong></a></li>
+                  <li><a href=""><strong>BMI: {{case.BMI}}</strong></a></li>
+                  <li><a href=""><strong>Pallor: {{case.Pallor}}</strong></a></li>
+                  <li><a href=""><strong>Icterus: {{case.Icterus}}</strong></a></li>
+                  <li><a href=""><strong>Cyanosis: {{case.Cyanosis}}</strong></a></li>
+                  <li><a href=""><strong>Clubbing: {{case.Clubbing}}</strong></a></li>
+                  <li><a href=""><strong>Lymphadenopathy: {{case.Lymphadenopathy}}</strong></a></li>
+                  <li><a href=""><strong>Thyroid Enlargement: {%if case.ThyroidE%}
+                                                    Diffuse
+                                                  {%else%}
+                                                    Nodular
+                                                  {%endif%}</strong></a></li>
+                  <li><a href=""><strong>Peripheral Pulses: {{case.PeripheralP}}</strong></a></li>
+                  <li><a href=""><strong>C sign: {{case.Csign}}</strong></a></li>
+                  <li><a href=""><strong>T sign: {{case.Tsign}}</strong></a></li>
+                  <li><a href=""><strong>Petechiae: {{case.Petechiae}}</strong></a></li>
+                  <li><a href=""><strong>Purpura: {{case.Purpura}}</strong></a></li>
+                  <li><a href=""><strong>Acanthosis: {{case.Acanthosis}}</strong></a></li>
+                  <li><a href=""><strong>Skin Tags: {{case.SkinTags}}</strong></a></li>
                     </ul>
                     </li>
                   <li><a href="/diagnose"><i class="fa fa-stethoscope "></i> Diagnose</a>
@@ -160,11 +218,11 @@ td > div > a {
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="{% static 'dashboard/self/pictures/img.jpg' %}" alt="">Shubhang Borkar
+                    <img src="{% static 'dashboard/self/pictures/img.jpg' %}" alt="">{{ user.get_full_name|default:user.username }}
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href="javascript:;"> Profile</a></li>
+                    <li><a href="/profile"> Profile</a></li>
                     <li>
                       <a href="javascript:;">
                         <span class="badge bg-red pull-right">50%</span>
@@ -188,7 +246,7 @@ td > div > a {
           <div id="sticky-anchor"></div>
 
           <div class="row">
-          <div class="col-md-12 col-sm-12 col-xs-12">
+          <!-- <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                 <div class="col-md-2 col-sm-4 col-xs-4">
               <h5><strong>Diagnosis Status</strong></h5>
@@ -200,9 +258,9 @@ td > div > a {
                   </div>
                   </div>
                   </div>
+ -->
 
-
-            <div class="col-md-6 col-sm-3 col-xs-12">
+            <div class="col-md-5 col-sm-6 col-xs-12">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
@@ -233,543 +291,540 @@ td > div > a {
                       <div id="myTabContent" class="tab-content">
                         <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="signs">
 
-                
+                        <div class="container">
 
-                          
+  <ul class="nav nav-pills">
+    <li class="active"><a href="#head" data-toggle="tab">Head</a></li>
+    <li><a href="#neck" data-toggle="tab">Neck</a></li>
+    <li><a href="#chest" data-toggle="tab">Chest</a></li>
+    <li><a href="#back" data-toggle="tab">Back</a></li>
+    <li><a href="#arm" data-toggle="tab">Arm</a></li>
+    <li><a href="#abdomen" data-toggle="tab">Abdomen</a></li>
+    <li><a href="#pelvis" data-toggle="tab">Pelvis</a></li>
+    <li><a href="#legs" data-toggle="tab">Legs</a></li>
+    <li><a href="#skin" data-toggle="tab">Skin</a></li>
+  </ul>
 
+  <div class="tab-content">
+    <div id="head" class="tab-pane fade in active">
+      <ul class="nav nav-tabs">
+      <br>
+    <li class="active"><a href="#scalp" data-toggle="tab">Scalp</a></li>
+    <li><a href="#eyes" data-toggle="tab">Eyes</a></li>
+    <li><a href="#ears" data-toggle="tab">Ears</a></li>
+    <li><a href="#face" data-toggle="tab">Face</a></li>
+    <li><a href="#nose" data-toggle="tab">Nose</a></li>
+    <li><a href="#mouth" data-toggle="tab">Mouth</a></li>
+    <li><a href="#jaw" data-toggle="tab">Jaw</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="scalp" class="tab-pane fade in active">
+<div class="scroll">
 
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    <div id="eyes" class="tab-pane fade">
+<div class="scroll">
 
-                   <div class="x_content">
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    <div id="ears" class="tab-pane fade">
+<div class="scroll">
 
-                    <div class="col-md-3 col-sm-6 col-xs-4">
-                      <!-- required for floating -->
-                      <!-- Nav tabs -->
-                      <ul class="nav nav-tabs tabs-left">
-                        <li class="active"><a href="#head" data-toggle="tab">Head</a>
-                        </li>
-                        <li><a href="#neck" data-toggle="tab">Neck</a>
-                        </li>
-                        <li><a href="#chest" data-toggle="tab">Chest</a>
-                        </li>
-                        <li><a href="#arm" data-toggle="tab">Arm</a>
-                        </li>
-                        <li><a href="#abdomen" data-toggle="tab">Abdomen</a>
-                        </li>
-                        <li><a href="#pelvis" data-toggle="tab">Pelvis</a>
-                        </li>
-                        <li><a href="#legs" data-toggle="tab">Legs</a>
-                        </li>
-                      </ul>
-                    </div>
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    <div id="face" class="tab-pane fade">
+<div class="scroll">
 
-                    <div class="col-md-9 col-sm-6 col-xs-8">
-                      <!-- Tab panes -->
-                      <div class="tab-content">
-                        <div class="tab-pane active" id="head">
-                  <div class="x_content">
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    <div id="nose" class="tab-pane fade">
+<div class="scroll">
 
-                    <div class="col-md-3 col-sm-6 col-xs-4">
-                      <!-- required for floating -->
-                      <!-- Nav tabs -->
-                      <ul class="nav nav-tabs tabs-left">
-                        <li class="active"><a href="#scalp" data-toggle="tab">Scalp</a>
-                        </li>
-                        <li><a href="#eyes" data-toggle="tab">Eyes</a>
-                        </li>
-                        <li><a href="#ears" data-toggle="tab">Ears</a>
-                        </li>
-                        <li><a href="#face" data-toggle="tab">Face</a>
-                        </li>
-                        <li><a href="#nose" data-toggle="tab">Nose</a>
-                        </li>
-                        <li><a href="#mouth" data-toggle="tab">Mouth</a>
-                        </li>
-                        <li><a href="#jaw" data-toggle="tab">Jaw</a>
-                        </li>
-                      </ul>
-                    </div>
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    <div id="mouth" class="tab-pane fade">
+<div class="scroll">
 
-                    <div class="col-md-9 col-sm-6 col-xs-8">
-                      <!-- Tab panes -->
-                    <div class="tab-content">
-                     <div class="tab-pane active" id="scalp">
-                         <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Search symptoms...">
-                          <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Go!</button>
-                          </span>
-                         </div>
-                         <div class="scroll">
-                         <div class="x_content">
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    <div id="jaw" class="tab-pane fade">
+<div class="scroll">
 
-                      <div class="">
-                        <ul class="to_do">
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> This </p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> is</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> another</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> way</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> of</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> putting</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> symptoms</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> in</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> a</p>
-                          </li>
-                          <li>
-                            <p>
-                              <input type="checkbox" class="flat"> list</p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                      </div>
-                     </div>
-                     <div class="tab-pane" id="eyes">
-                         <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Search symptoms...">
-                          <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Go!</button>
-                          </span>
-                         </div>
-                         <div class="scroll">
-                         <table id="datatable" class="table table-striped table-bordered">
-                           <thead>
-                            <tr>
-                             <th>Name</th>
-                           </tr>
-                         </thead>
-                         <tbody>
-                          <tr>
-                            <td>1<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>2<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>3<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>4<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>5<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>6<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>7<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>8<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>9<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>10<div><a href="#">Add</a></div></td>
-                          </tr>
-                        </tbody>
-                       </table>
-                      </div>
-                     </div>
-                     <div class="tab-pane" id="ears">
-                         <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Search symptoms...">
-                          <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Go!</button>
-                          </span>
-                         </div>
-                         <div class="scroll">
-                         <table id="datatable" class="table table-striped table-bordered">
-                           <thead>
-                            <tr>
-                             <th>Name</th>
-                           </tr>
-                         </thead>
-                         <tbody>
-                          <tr>
-                            <td>1<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>2<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>3<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>4<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>5<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>6<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>7<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>8<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>9<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>10<div><a href="#">Add</a></div></td>
-                          </tr>
-                        </tbody>
-                       </table>
-                      </div>
-                     </div>
-                     <div class="tab-pane" id="face">
-                         <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Search symptoms...">
-                          <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Go!</button>
-                          </span>
-                         </div>
-                         <div class="scroll">
-                         <table id="datatable" class="table table-striped table-bordered">
-                           <thead>
-                            <tr>
-                             <th>Name</th>
-                           </tr>
-                         </thead>
-                         <tbody>
-                          <tr>
-                            <td>1<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>2<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>3<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>4<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>5<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>6<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>7<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>8<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>9<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>10<div><a href="#">Add</a></div></td>
-                          </tr>
-                        </tbody>
-                       </table>
-                      </div>
-                     </div>
-                     <div class="tab-pane" id="nose">
-                         <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Search symptoms...">
-                          <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Go!</button>
-                          </span>
-                         </div>
-                         <div class="scroll">
-                         <table id="datatable" class="table table-striped table-bordered">
-                           <thead>
-                            <tr>
-                             <th>Name</th>
-                           </tr>
-                         </thead>
-                         <tbody>
-                          <tr>
-                            <td>1<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>2<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>3<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>4<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>5<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>6<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>7<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>8<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>9<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>10<div><a href="#">Add</a></div></td>
-                          </tr>
-                        </tbody>
-                       </table>
-                      </div>
-                     </div>
-                     <div class="tab-pane" id="mouth">
-                         <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Search symptoms...">
-                          <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Go!</button>
-                          </span>
-                         </div>
-                         <div class="scroll">
-                         <table id="datatable" class="table table-striped table-bordered">
-                           <thead>
-                            <tr>
-                             <th>Name</th>
-                           </tr>
-                         </thead>
-                         <tbody>
-                          <tr>
-                            <td>1<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>2<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>3<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>4<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>5<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>6<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>7<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>8<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>9<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>10<div><a href="#">Add</a></div></td>
-                          </tr>
-                        </tbody>
-                       </table>
-                      </div>
-                     </div>
-                     <div class="tab-pane" id="jaw">
-                         <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Search symptoms...">
-                          <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Go!</button>
-                          </span>
-                         </div>
-                         <div class="scroll">
-                         <table id="datatable" class="table table-striped table-bordered">
-                           <thead>
-                            <tr>
-                             <th>Name</th>
-                           </tr>
-                         </thead>
-                         <tbody>
-                          <tr>
-                            <td>1<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>2<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>3<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>4<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>5<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>6<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>7<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>8<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>9<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>10<div><a href="#">Add</a></div></td>
-                          </tr>
-                        </tbody>
-                       </table>
-                      </div>
-                     </div>
-                     </div>
-                    </div>
-                    </div>
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    </div>
 
-                        </div>
-                  <div class="tab-pane" id="neck">
-                    <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Search symptoms...">
-                          <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Go!</button>
-                          </span>
-                         </div>
-                         <div class="scroll">
-                         <table id="datatable" class="table table-striped table-bordered">
-                           <thead>
-                            <tr>
-                             <th>Name</th>
-                           </tr>
-                         </thead>
-                         <tbody>
-                          <tr>
-                            <td>1<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>2<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>3<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>4<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>5<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>6<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>7<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>8<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>9<div><a href="#">Add</a></div></td>
-                          </tr>
-                          <tr>
-                            <td>10<div><a href="#">Add</a></div></td>
-                          </tr>
-                        </tbody>
-                       </table>
-                      </div>
-                  </div>
+    </div>
+    <div id="neck" class="tab-pane fade">
+    <ul class="nav nav-tabs">
+      <br>
+    <li class="active"><a href="#neckf" data-toggle="tab">Neck Front</a></li>
+    <li><a href="#neckb" data-toggle="tab">Neck Back</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="neckf" class="tab-pane fade in active">
+<div class="scroll">
+
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    <div id="neckb" class="tab-pane fade">
+<div class="scroll">
+
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    </div>
+
+    </div>
 
 
-                  <div class="tab-pane" id="chest">
-                   <div class="x_content">
+    <div id="chest" class="tab-pane fade">
+    <ul class="nav nav-tabs">
+      <br>
+    <li class="active"><a href="#chests" data-toggle="tab">Chest</a></li>
+    <li><a href="#sternum" data-toggle="tab">Sternum</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="chests" class="tab-pane fade in active">
+<div class="scroll">
 
-                    <div class="col-md-3 col-sm-6 col-xs-4">
-                      <!-- required for floating -->
-                      <!-- Nav tabs -->
-                      <ul class="nav nav-tabs tabs-left">
-                        <li class="active"><a href="#bothchests" data-toggle="tab">Chests Tab</a>
-                        </li>
-                        <li><a href="#sternum" data-toggle="tab">Sternum</a>
-                        </li>
-                        <li><a href="#latchest" data-toggle="tab">Lateral Chest</a>
-                        </li>
-                      </ul>
-                    </div>
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    <div id="sternum" class="tab-pane fade">
+<div class="scroll">
 
-                    <div class="col-md-9 col-sm-6 col-xs-8">
-                      <!-- Tab panes -->
-                      <div class="tab-content">
-                        <div class="tab-pane active" id="bothchests">
-                          <p class="lead">Chests tab</p>
-                          <p></p>
-                        </div>
-                        <div class="tab-pane active" id="sternum">
-                          <p class="lead">Sternum tab</p>
-                          <p></p>
-                        </div>
-                        <div class="tab-pane active" id="latchest">
-                          <p class="lead">Lateral Chest</p>
-                          <p></p>
-                        </div>
-                      </div>
-                    </div>
-                    </div>
-                </div>
-                   <div class="tab-pane" id="arm">Profile Tab.</div>
-                     <div class="tab-pane" id="abdomen">Profile Tab.</div>
-                       <div class="tab-pane" id="pelvis">Profile Tab.</div>
-                         <div class="tab-pane" id="legs">Profile Tab.</div>
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    </div>
+
+    </div>
+    <div id="back" class="tab-pane fade">
+    <ul class="nav nav-tabs">
+      <br>
+    <!-- <li class="active"><a href="#back1" data-toggle="tab">Back</a></li> -->
+    <li class="active"><a href="#backside" data-toggle="tab">Back</a></li>
+    <li><a href="#uspine" data-toggle="tab">Upper Spine</a></li>
+    <li><a href="#lspine" data-toggle="tab">Lower Spine</a></li>
+  </ul>
+  <div class="tab-content">
+  <div id="backside" class="tab-pane fade in active">
+<div class="scroll">
+
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+   
+    <div id="uspine" class="tab-pane fade">
+<div class="scroll">
+
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    <div id="lspine" class="tab-pane fade in active">
+<div class="scroll">
+
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    </div>
+
+    </div>
+
+    <div id="arm" class="tab-pane fade">
+    <ul class="nav nav-tabs">
+      <br>
+    <li class="active"><a href="#neckf" data-toggle="tab">Neck Front</a></li>
+    <li><a href="#neckb" data-toggle="tab">Neck Back</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="neckf" class="tab-pane fade in active">
+<div class="scroll">
+
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    <div id="neckb" class="tab-pane fade">
+<div class="scroll">
+
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    </div>
+
+    </div>
 
 
+    <div id="abdomen" class="tab-pane fade">
+    <ul class="nav nav-tabs">
+      <br>
+    <li class="active"><a href="#neckf" data-toggle="tab">Neck Front</a></li>
+    <li><a href="#neckb" data-toggle="tab">Neck Back</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="neckf" class="tab-pane fade in active">
+<div class="scroll">
+
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    <div id="neckb" class="tab-pane fade">
+<div class="scroll">
+
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    </div>
+
+    </div>
 
 
+    <div id="pelvis" class="tab-pane fade">
+    <ul class="nav nav-tabs">
+      <br>
+    <li class="active"><a href="#neckf" data-toggle="tab">Neck Front</a></li>
+    <li><a href="#neckb" data-toggle="tab">Neck Back</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="neckf" class="tab-pane fade in active">
+<div class="scroll">
+
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    <div id="neckb" class="tab-pane fade">
+<div class="scroll">
+
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    </div>
+
+    </div>
 
 
+    <div id="legs" class="tab-pane fade">
+    <ul class="nav nav-tabs">
+      <br>
+    <li class="active"><a href="#neckf" data-toggle="tab">Neck Front</a></li>
+    <li><a href="#neckb" data-toggle="tab">Neck Back</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="neckf" class="tab-pane fade in active">
+<div class="scroll">
 
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    <div id="neckb" class="tab-pane fade">
+<div class="scroll">
 
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    </div>
 
+    </div>
+    <div id="skin" class="tab-pane fade">
+    <ul class="nav nav-tabs">
+      <br>
+    <li class="active"><a href="#neckf" data-toggle="tab">Neck Front</a></li>
+    <li><a href="#neckb" data-toggle="tab">Neck Back</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="neckf" class="tab-pane fade in active">
+<div class="scroll">
 
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    <div id="neckb" class="tab-pane fade">
+<div class="scroll">
 
+<ul class="list-group">
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 1</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 2</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 3</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 4</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 5</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 6</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 7</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 8</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 9</a></li>
+  <li class="list-group-item" id="sympadd"><a href="#">Symptom 10</a></li>
+</ul>
+</div>
+    </div>
+    </div>
 
+    </div>
 
-
-
-                      </div>
-                    </div>
-                    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        </div>
+</div>
+</div>
+</div>
 
                         <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="tests">
                           
@@ -842,7 +897,7 @@ td > div > a {
                 <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                 <div class="x_title">
-                  <h5><strong>Doctors Comments</strong></h5>
+                  <h5><strong>Comments</strong></h5>
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -857,14 +912,14 @@ td > div > a {
                 </div>
 
               </div>
-              <div class="col-md-3 col-sm-3 col-xs-12">
+              <!-- <div class="col-md-3 col-sm-3 col-xs-12">
               <div class="x_panel">
                 <div class="x_title">
                   <h5><strong>Selected Symptoms</strong></h5>
                   <div class="clearfix"></div>
                 </div>
                                 <div class="x_content">
-                <!-- jambo_table bulk_action-->
+                
 
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>
@@ -912,6 +967,22 @@ td > div > a {
                         </tr>
                       </tbody>
                     </table>
+
+                </div>
+                </div>
+
+              </div> -->
+              <div class="col-md-4 col-sm-4 col-xs-12">
+              <div class="x_panel">
+                <div class="x_title">
+                  <h5><strong>Selected Symptoms</strong></h5>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                <ul class="list-group">
+                <div id="sympbox"></div>
+</ul>
 
                 </div>
                 </div>
@@ -1067,6 +1138,117 @@ td > div > a {
 
         <!-- Datatables -->
     <script>
+    // $('#sympadd').click(function(){
+    //   $.ajax({
+    //            type: "POST",
+    //            url: "{% url 'sympadd' %}",
+    //            data: {'symp': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+    //            dataType: "json",
+    //            success: function(response) {
+    //                   // alert(response.symp);
+    //                   $('#sympbox').html(response.symp);
+    //             },
+    //             error: function(rs, e) {
+    //                    alert(rs.responseText);
+    //             }
+    //       }); 
+    // })
+
+    $('.list-group-item').click(function(){
+      $.ajax({
+               type: "POST",
+               url: "{% url 'sympadd' %}",
+               data: {'symp': $(this).text(), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      // alert(response.symp);
+                      // $('#sympbox').html(response.symp);
+                      // $('.list-group-item').unbind('click');
+                        var text = response.symp
+                        var temp = 0
+                        // alert(text)
+                        $('.list-group-item-remove').each(function(){
+                          // alert($(this).text())
+                         if( $(this).text() == text )
+                         {
+                         alert("Symptom already exists");
+                         temp = 1;
+                         }                          
+                        });
+                        if (temp == 0)
+                          $('#sympbox').last().append('<li class="list-group-item-remove" id="sympremove"><a href="#">' + response.symp + '</a></li>');
+
+
+                      
+
+
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          });
+       // $(this).off('click');
+       // $(this).removeAttr("onclick");
+       $(this).addClass('disabled');
+       // alert('Clicked and unbound!');
+
+    })
+    // $('.list-group-item-remove').click(function(){
+    //   $.ajax({
+    //            type: "POST",
+    //            url: "{% url 'sympremove' %}",
+    //            data: {'symp': $(this).text(), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+    //            dataType: "json",
+    //            success: function(response) {
+    //                   // alert(response.symp);
+
+    //             },
+    //             error: function(rs, e) {
+    //                    alert(rs.responseText);
+    //             }
+    //       }); 
+    // })
+    // $('.list-group-item').on('click', function() {
+    //    $(this).off('click');
+    //    $(this).addClass('disabled')
+    //    // alert('Clicked and unbound!');
+    // });
+    // $('.list-group-item-remove').bind('click', function() {
+    //    $(this).unbind('click');
+    //    $(this).addClass('disabled')
+    //    alert('Clicked and unbound!');
+    // });
+
+    $("#sympbox").on("click", ".list-group-item-remove", function(){
+       $(this).remove();
+       $.ajax({
+               type: "POST",
+               url: "{% url 'sympremove' %}",
+               data: {'symp': $(this).text(), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      // alert(response.symp);
+
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+       var text = $(this).text()
+       // alert(text)
+       $('.list-group-item').each(function(){
+        // alert($(this))
+        if( $(this).text() == text )
+        {
+          // $(this).on("click")
+          // $(this).removeAttr('href');
+          $(this).removeClass('disabled');
+        }
+      });
+    });
+
+    // $('.list-group-item').unbind('click'); 
+
 
       $(document).ready(function() {
         var handleDataTableButtons = function() {
